@@ -217,22 +217,27 @@ function vMixRefresh(data){
     
     for(let i = 0; i < overlayArray.length && i < 9; i++){
         if(Number.parseFloat(overlayArray[i].getAttribute("index")) !== 9){
-
+            let zoomY;
+            let zoomX;
+            let panY;
+            let panX;
+            let inputKey;
+            let inputName;
             if(overlayArray[i].getElementsByTagName("position")[0] !== undefined){
-                const zoomY =     (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("zoomY"))   *   100);
-                const zoomX =     (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("zoomX"))   *   100);
-                const panY =      (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("panY"))    *   100);
-                const panX =      (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("panX"))    *   100);
-                const inputKey =  overlayArray[i].getAttribute("key")
-                const inputName =  lastResponse.querySelector(`input[key="${inputKey}"]`).getAttribute("title")
+                zoomY =     (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("zoomY"))   *   100);
+                zoomX =     (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("zoomX"))   *   100);
+                panY =      (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("panY"))    *   100);
+                panX =      (Number.parseFloat(overlayArray[i].getElementsByTagName("position")[0].getAttribute("panX"))    *   100);
+                inputKey =  overlayArray[i].getAttribute("key")
+                inputName =  lastResponse.querySelector(`input[key="${inputKey}"]`).getAttribute("title")
             }
             else{
-                const zoomY =     (100);
-                const zoomX =     (100);
-                const panY =      (0);
-                const panX =      (0);
-                const inputKey =  overlayArray[i].getAttribute("key")
-                const inputName =  lastResponse.querySelector(`input[key="${inputKey}"]`).getAttribute("title")
+                zoomY =     (100);
+                zoomX =     (100);
+                panY =      (0);
+                panX =      (0);
+                inputKey =  overlayArray[i].getAttribute("key")
+                inputName =  lastResponse.querySelector(`input[key="${inputKey}"]`).getAttribute("title")
 
             }
 
@@ -325,14 +330,14 @@ function generateVU(bool, overlay){
 
 function refresh(){
     const saveArray = []
-    for (const extra of extras) {
+    extras.forEach((extra, i) => {
         if(saveArray[i] === undefined){
             saveArray[i] = {}
         }
         for (const setting of saveSettings) {
             saveArray[i][setting] = extra[setting]
         }
-    }
+    })
     $("#saveURL").val(`${window.location.href.split('?')[0]}?Settings=${encodeURIComponent(JSON.stringify(saveArray))}`)
     $("#saveURL").focus(function(){
         $(this).select();
