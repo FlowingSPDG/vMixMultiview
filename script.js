@@ -6,6 +6,7 @@ const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m,key,val
 const vMixSettings = {
     IP: "localhost",
     port: "8088",
+    utility_port: "8080",
     multiViewInput: 0,
     previousProgram: -1,
     preivousPreview: -1,
@@ -142,7 +143,8 @@ if(vars.Settings){
 }
 
 setInterval(() => {
-    fetch(`http://${vMixSettings.IP}:${vMixSettings.port}/api`)
+    const url = `http://${vMixSettings.IP}:${vMixSettings.utility_port}/api/raw`
+    fetch(url)
     .then(response => response.text())
     .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
     .then(data => vMixRefresh(data));
